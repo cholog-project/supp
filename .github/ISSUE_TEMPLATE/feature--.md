@@ -1,3 +1,12 @@
+---
+name: "\U0001F4A1Feature -"
+about: 새로운 기능을 추가할 때 생성해주세요.
+title: ''
+labels: enhancement
+assignees: ''
+
+---
+
 ## 요약
 
 요청하는 기능에 대한 명확하고 간결한 설명을 적어주세요.
