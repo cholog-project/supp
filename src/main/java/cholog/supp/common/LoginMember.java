@@ -1,8 +1,5 @@
 package cholog.supp.common;
 
-public class LoginMember {
-
-    private String email;
-    private String password;
+public record LoginMember(String email, String password) {
 
 }
