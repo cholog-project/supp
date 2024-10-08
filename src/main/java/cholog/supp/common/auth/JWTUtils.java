@@ -15,7 +15,7 @@ public class JWTUtils {
     public String createToken(Member member) {
         return Jwts.builder()
             .setSubject(member.getId().toString())
-            .claim("email",member.getEmail())
+            .claim("email", member.getEmail())
             .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
             .compact();
     }
