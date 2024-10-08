@@ -1,6 +1,6 @@
 package cholog.supp.api.member.service;
 
-import cholog.supp.api.member.dto.request.LoginMember;
+import cholog.supp.api.member.dto.request.SigninMember;
 import cholog.supp.api.member.dto.request.SignupMember;
 import cholog.supp.common.auth.JWTUtils;
 import cholog.supp.db.member.Member;
@@ -17,10 +17,10 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final JWTUtils jwtUtils;
 
-    public String signin(LoginMember loginMember) {
-        Member member = memberRepository.findByEmail(loginMember.email())
+    public String signin(SigninMember signinMember) {
+        Member member = memberRepository.findByEmail(signinMember.email())
             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 아이디 입니다."));
-        boolean matches = passwordEncoder.matches(loginMember.password(), member.getPassword());
+        boolean matches = passwordEncoder.matches(signinMember.password(), member.getPassword());
         if (!matches) {
             throw new IllegalArgumentException("올바르지 않은 아이디 입니다.");
         }
