@@ -1,5 +1,7 @@
 package cholog.supp;
 
+import cholog.supp.api.member.dto.request.SignupMember;
+import cholog.supp.api.member.service.MemberService;
 import cholog.supp.common.auth.JWTUtils;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberRepository;
@@ -16,6 +18,8 @@ public class JWTTest {
     JWTUtils jwtUtils;
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    MemberService memberService;
 
     @Test
     void secretKeyTest() {
@@ -23,6 +27,12 @@ public class JWTTest {
         Member findMember = memberRepository.findByEmail("1234").get();
 
         System.out.println("token = " + jwtUtils.createToken(findMember));
+    }
+
+    @Test
+    void signupTest() {
+        memberRepository.findByEmail("4321");
+        memberService.signup(new SignupMember("4321", "4321"));
     }
 
 }
