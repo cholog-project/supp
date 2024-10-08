@@ -9,9 +9,11 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "MEMBER")
 public class Member {
 
@@ -29,9 +31,6 @@ public class Member {
     @NotNull
     @Column(name = "password", nullable = false)
     private String password;
-
-    public Member() {
-    }
 
     public Member(String email, String password) {
         this.email = email;

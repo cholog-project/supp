@@ -1,8 +1,8 @@
 package cholog.supp.api.member.controller;
 
 import cholog.supp.api.member.service.MemberService;
-import cholog.supp.api.member.dto.request.SigninMember;
-import cholog.supp.api.member.dto.request.SignupMember;
+import cholog.supp.api.member.dto.request.SignInMember;
+import cholog.supp.api.member.dto.request.SignUpMember;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +20,14 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public void signup(@RequestBody SignupMember signupMember) {
-        memberService.signup(signupMember);
+    public void signUp(@RequestBody SignUpMember signupMember) {
+        memberService.signUp(signupMember);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity signin(@RequestBody SigninMember signinMember,
+    public ResponseEntity signIn(@RequestBody SignInMember signinMember,
         HttpServletResponse response) {
-        String token = memberService.signin(signinMember);
+        String token = memberService.signIn(signinMember);
         Cookie cookie = new Cookie("token", token);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
