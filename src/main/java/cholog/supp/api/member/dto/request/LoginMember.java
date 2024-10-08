@@ -1,5 +1,4 @@
-package cholog.supp.common;
+package cholog.supp.api.member.dto.request;
 
 public record LoginMember(String email, String password) {
-
 }

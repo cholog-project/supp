@@ -1,7 +1,11 @@
-package cholog.supp.api.member;
+package cholog.supp.api.member.controller;
 
-import cholog.supp.common.LoginMember;
-import cholog.supp.common.SignupMember;
+import cholog.supp.api.common.APISuccessResponse;
+import cholog.supp.api.member.dto.response.LoginResponse;
+import cholog.supp.api.member.service.MemberService;
+import cholog.supp.api.member.dto.request.LoginMember;
+import cholog.supp.api.member.dto.request.SignupMember;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +27,13 @@ public class MemberController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity signin(@RequestBody LoginMember loginMember,
+    public void signin(@RequestBody LoginMember loginMember,
         HttpServletResponse response) {
 
-        /**
-         * TODO
-         * 완성.
-         */
-        return null;
+        String token = memberService.signin(loginMember);
+        Cookie cookie = new Cookie("token", token);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 }

@@ -1,7 +1,8 @@
-package cholog.supp.api.member;
+package cholog.supp.api.member.service;
 
-import cholog.supp.common.LoginMember;
-import cholog.supp.common.SignupMember;
+import cholog.supp.api.member.dto.request.LoginMember;
+import cholog.supp.api.member.dto.request.SignupMember;
+import cholog.supp.common.auth.JWTUtils;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JWTUtils jwtUtils;
 
     public String signin(LoginMember loginMember) {
         Member member = memberRepository.findByEmail(loginMember.email())
@@ -23,11 +25,7 @@ public class MemberService {
             throw new IllegalArgumentException("올바르지 않은 아이디 입니다.");
         }
 
-        /**
-         * TODO
-         * JWT 토큰 생성해서 반환하기
-         */
-        return "";
+        return jwtUtils.createToken(member);
     }
 
     public void signup(SignupMember signupMember) {
