@@ -6,6 +6,7 @@ import cholog.supp.common.auth.JWTUtils;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class MemberService {
         String encodePassword = passwordEncoder.encode(signupMember.password());
         Member member = new Member(signupMember.email(), encodePassword);
         if (memberRepository.findByEmail(signupMember.email()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 존재하는 회원입니다.");
+            throw new DuplicateKeyException("이미 존재하는 회원입니다.");
         }
         memberRepository.save(member);
     }
