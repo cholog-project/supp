@@ -14,7 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private static final String SESSION_KEY = "SUPP_SESSION_ID";
+    private static final String SESSION_KEY = "member";
     private final MemberRepository memberRepository;
 
     @Override
