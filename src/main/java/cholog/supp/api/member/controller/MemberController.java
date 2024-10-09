@@ -4,7 +4,9 @@ import cholog.supp.api.member.service.MemberService;
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,12 +28,9 @@ public class MemberController {
 
     @PostMapping("/signin")
     public ResponseEntity signIn(@RequestBody SignInMember signinMember,
-        HttpServletResponse response) {
-        String token = memberService.signIn(signinMember);
-        Cookie cookie = new Cookie("token", token);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        memberService.signIn(signinMember, session);
         return ResponseEntity.ok().build();
     }
 }

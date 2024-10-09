@@ -2,7 +2,6 @@ package cholog.supp;
 
 import cholog.supp.api.member.dto.request.SignUpMember;
 import cholog.supp.api.member.service.MemberService;
-import cholog.supp.common.auth.JWTUtils;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberRepository;
 import org.junit.jupiter.api.Test;
