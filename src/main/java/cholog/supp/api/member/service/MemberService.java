@@ -16,7 +16,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final String SESSION_KEY = "SUPP_SESSION_ID";
+    private static final String SESSION_KEY = "member";
 
     public void signIn(SignInMember signinMember, HttpSession session) {
         Member member = memberRepository.findByEmail(signinMember.email())
