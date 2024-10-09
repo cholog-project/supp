@@ -11,7 +11,6 @@ import cholog.supp.db.member.MemberType;
 import cholog.supp.db.study.StudyGroup;
 import cholog.supp.db.study.StudyGroupRepository;
 import java.util.List;
-import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,12 +34,14 @@ public class StudyGroupService {
 
     @Transactional(readOnly = true)
     public List<StudyGroupResponse> getGroup(Member member) {
-        List<MemberStudyMap> memberStudyMaps = memberStudyMapRepository.findByMemberId(member.getId());
+        List<MemberStudyMap> memberStudyMaps = memberStudyMapRepository.findByMemberId(
+            member.getId());
         return memberStudyMaps.stream()
             .map(MemberStudyMap::getStudyGroup)
             .map(it -> {
                 long peopleCount = memberStudyMapRepository.countByStudyGroupId(it.getId());
-                return new StudyGroupResponse(it.getId(), it.getName(), it.getOrganization(), peopleCount);
+                return new StudyGroupResponse(it.getId(), it.getName(), it.getOrganization(),
+                    peopleCount);
             }).toList();
     }
 }

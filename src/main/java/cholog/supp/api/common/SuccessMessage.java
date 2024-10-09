@@ -15,7 +15,7 @@ public enum SuccessMessage {
     MODIFY_POST_SUCCESS("질문글 수정 성공", HttpStatus.OK.value()),
     WRITE_COMMENT_SUCCESS("의견 작성 성공", HttpStatus.OK.value()),
     DELETE_COMMENT_SUCCESS("의견 삭제 성공", HttpStatus.NO_CONTENT.value()),
-    MODIFY_COMMENT_SUCCESS("의견 수정 성공", HttpStatus.OK.value())
+    MODIFY_COMMENT_SUCCESS("의견 수정 성공", HttpStatus.OK.value()),
     ;
 
     private final String message;
