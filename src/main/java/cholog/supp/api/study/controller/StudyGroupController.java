@@ -3,6 +3,7 @@ package cholog.supp.api.study.controller;
 import cholog.supp.api.common.APISuccessResponse;
 import cholog.supp.api.study.dto.CreateStudyGroupRequest;
 import cholog.supp.api.study.service.StudyGroupService;
+import cholog.supp.db.member.MemberCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,6 @@ public class StudyGroupController {
     @PostMapping("/group")
     public ResponseEntity<APISuccessResponse<Void>> createGroup(
         @RequestBody CreateStudyGroupRequest request) {
-//        studyGroupService
-        return null;
+        studyGroupService
     }
 }

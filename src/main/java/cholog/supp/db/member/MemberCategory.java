@@ -36,4 +36,8 @@ public class MemberCategory {
     @Column(name = "member_type", nullable = false)
     private MemberType memberType;
 
+    public MemberCategory(Member member, MemberType memberType) {
+        this.member = member;
+        this.memberType = memberType;
+    }
 }

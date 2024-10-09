@@ -38,6 +38,11 @@ public class MemberStudyMap {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "study_id", nullable = false)
-    private StudyGroup study;
+    private StudyGroup studyGroup;
 
+    public MemberStudyMap(Member member, MemberCategory memberCategory, StudyGroup studyGroup) {
+        this.member = member;
+        this.memberCategory = memberCategory;
+        this.studyGroup = studyGroup;
+    }
 }
