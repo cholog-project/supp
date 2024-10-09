@@ -2,6 +2,7 @@ package cholog.supp.db.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class MemberCategory {
     private Member member;
 
     @NotNull
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "member_type", nullable = false)
     private MemberType memberType;
 
