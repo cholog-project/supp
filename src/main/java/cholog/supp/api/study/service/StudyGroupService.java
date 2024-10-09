@@ -25,7 +25,6 @@ public class StudyGroupService {
     public void createStudyGroup(CreateStudyGroupRequest request, Member member) {
         StudyGroup studyGroup = studyGroupRepository.save(
             new StudyGroup(request.studyName(), request.organization()));
-        //스터디 생성 링크를 주고 만들었을 때 비로소 그 스터디에서만 노드가 된다.
         MemberCategory memberCategory = memberCategoryRepository.save(
             new MemberCategory(member, MemberType.NODE));
         memberStudyMapRepository.save(new MemberStudyMap(member, memberCategory, studyGroup));
