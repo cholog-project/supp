@@ -25,8 +25,7 @@ public class PostService {
         MemberStudyMap memberStudy = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
                 createPostRequest.studyId(), member.getId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
-        StudyGroup studyGroup = studyGroupRepository.findById(memberStudy.getStudyGroup().getId())
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디입니다."));
+        StudyGroup studyGroup = memberStudy.getStudyGroup();
         postRepository.save(
             new Post(member, studyGroup, createPostRequest.title(),
                 createPostRequest.description()));
