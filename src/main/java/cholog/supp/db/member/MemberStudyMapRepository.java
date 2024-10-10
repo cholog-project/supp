@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberStudyMapRepository extends JpaRepository<MemberStudyMap, Long> {
 
-    List<MemberStudyMap> findByMemberId(Long memberId);
+    List<MemberStudyMap> findAllByMemberId(Long memberId);
 
     long countByStudyGroupId(Long studyGroupId);
 

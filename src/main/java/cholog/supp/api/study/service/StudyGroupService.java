@@ -34,7 +34,7 @@ public class StudyGroupService {
 
     @Transactional(readOnly = true)
     public List<StudyGroupResponse> getGroup(Member member) {
-        List<MemberStudyMap> memberStudyMaps = memberStudyMapRepository.findByMemberId(
+        List<MemberStudyMap> memberStudyMaps = memberStudyMapRepository.findAllByMemberId(
             member.getId());
         return memberStudyMaps.stream()
             .map(MemberStudyMap::getStudyGroup)
