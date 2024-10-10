@@ -8,4 +8,6 @@ public interface MemberStudyMapRepository extends JpaRepository<MemberStudyMap, 
     List<MemberStudyMap> findByMemberId(Long memberId);
 
     long countByStudyGroupId(Long studyGroupId);
+
+    MemberStudyMap findByStudyGroupIdAndMemberId(Long studyGroupId, Long memberId);
 }
