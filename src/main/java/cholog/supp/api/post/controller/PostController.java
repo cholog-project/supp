@@ -1,6 +1,6 @@
 package cholog.supp.api.post.controller;
 
-import cholog.supp.api.post.dto.PostRequest;
+import cholog.supp.api.post.dto.request.CreatePostRequest;
 import cholog.supp.api.post.service.PostService;
 import cholog.supp.common.auth.Auth;
 import cholog.supp.db.member.Member;
@@ -20,8 +20,9 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity createPost(@RequestBody PostRequest postRequest, @Auth Member member) {
-        postService.createPost(member, postRequest);
+    public ResponseEntity createPost(@RequestBody CreatePostRequest createPostRequest,
+        @Auth Member member) {
+        postService.createPost(member, createPostRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

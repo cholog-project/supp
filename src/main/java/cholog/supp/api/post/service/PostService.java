@@ -1,6 +1,6 @@
 package cholog.supp.api.post.service;
 
-import cholog.supp.api.post.dto.PostRequest;
+import cholog.supp.api.post.dto.request.CreatePostRequest;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberStudyMap;
 import cholog.supp.db.member.MemberStudyMapRepository;
@@ -21,13 +21,13 @@ public class PostService {
     private final MemberStudyMapRepository memberStudyMapRepository;
     private final StudyGroupRepository studyGroupRepository;
 
-    public void createPost(Member member, PostRequest postRequest) {
+    public void createPost(Member member, CreatePostRequest createPostRequest) {
         MemberStudyMap memberStudy = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
-                postRequest.studyId(), member.getId())
+                createPostRequest.studyId(), member.getId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
         StudyGroup studyGroup = studyGroupRepository.findById(memberStudy.getStudyGroup().getId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디입니다."));
         postRepository.save(
-            new Post(member, studyGroup, postRequest.title(), postRequest.content()));
+            new Post(member, studyGroup, createPostRequest.title(), createPostRequest.content()));
     }
 }
