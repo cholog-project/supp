@@ -28,6 +28,7 @@ public class PostService {
         StudyGroup studyGroup = studyGroupRepository.findById(memberStudy.getStudyGroup().getId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디입니다."));
         postRepository.save(
-            new Post(member, studyGroup, createPostRequest.title(), createPostRequest.content()));
+            new Post(member, studyGroup, createPostRequest.title(),
+                createPostRequest.description()));
     }
 }
