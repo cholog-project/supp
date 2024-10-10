@@ -40,4 +40,9 @@ public class Comment {
     @Column(name = "content", nullable = false)
     private String content;
 
+    public Comment(Member member, Post post, String content) {
+        this.member = member;
+        this.post = post;
+        this.content = content;
+    }
 }
