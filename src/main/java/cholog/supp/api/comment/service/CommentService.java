@@ -1,6 +1,7 @@
 package cholog.supp.api.comment.service;
 
 import cholog.supp.api.comment.dto.request.CreateCommentRequest;
+import cholog.supp.api.comment.dto.request.ModifyCommentRequest;
 import cholog.supp.db.comment.Comment;
 import cholog.supp.db.comment.CommentRepository;
 import cholog.supp.db.member.Member;
@@ -22,5 +23,11 @@ public class CommentService {
         Post post = postRepository.findById(commentRequest.postId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
         commentRepository.save(new Comment(member, post, commentRequest.content()));
+    }
+
+    public void modifyComment(ModifyCommentRequest commentRequest, Member member) {
+        Comment comment = commentRepository.findById(commentRequest.commentId())
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 의견글 입니다."));
+        comment.modifyContent(commentRequest.content());
     }
 }
