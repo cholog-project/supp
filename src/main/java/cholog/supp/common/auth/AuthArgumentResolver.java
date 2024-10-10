@@ -31,7 +31,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
         if (member == null) {
             throw new IllegalArgumentException("올바르지 않은 세션 정보입니다.");
         }
-        return memberRepository.findByEmail(member.getEmail())
+        return memberRepository.findById(member.getId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
     }
 }
