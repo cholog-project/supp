@@ -1,6 +1,7 @@
 package cholog.supp.db.member;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberStudyMapRepository extends JpaRepository<MemberStudyMap, Long> {
@@ -9,5 +10,5 @@ public interface MemberStudyMapRepository extends JpaRepository<MemberStudyMap, 
 
     long countByStudyGroupId(Long studyGroupId);
 
-    MemberStudyMap findByStudyGroupIdAndMemberId(Long studyGroupId, Long memberId);
+    Optional<MemberStudyMap> findByStudyGroupIdAndMemberId(Long studyGroupId, Long memberId);
 }
