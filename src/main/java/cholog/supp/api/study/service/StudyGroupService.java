@@ -24,12 +24,13 @@ public class StudyGroupService {
     private final MemberCategoryRepository memberCategoryRepository;
     private final MemberStudyMapRepository memberStudyMapRepository;
 
-    public void createStudyGroup(CreateStudyGroupRequest request, Member member) {
+    public Long createStudyGroup(CreateStudyGroupRequest request, Member member) {
         StudyGroup studyGroup = studyGroupRepository.save(
             new StudyGroup(request.studyName(), request.organization()));
         MemberCategory memberCategory = memberCategoryRepository.save(
             new MemberCategory(member, MemberType.NODE));
         memberStudyMapRepository.save(new MemberStudyMap(member, memberCategory, studyGroup));
+        return studyGroup.getId();
     }
 
     @Transactional(readOnly = true)

@@ -5,8 +5,10 @@ import cholog.supp.api.comment.dto.request.ModifyCommentRequest;
 import cholog.supp.api.comment.service.CommentService;
 import cholog.supp.common.auth.Auth;
 import cholog.supp.db.member.Member;
+import jakarta.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,16 +24,16 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity createComment(@RequestBody CreateCommentRequest commentRequest,
-        @Auth Member member) {
+    public ResponseEntity createComment(@Valid @RequestBody CreateCommentRequest commentRequest,
+        @Auth Member member) throws URISyntaxException {
         commentService.createComment(commentRequest, member);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.created(new URI("/api/v1/post/" + commentRequest.postId())).build();
     }
 
     @PutMapping
     public ResponseEntity modifyComment(@RequestBody ModifyCommentRequest commentRequest,
         @Auth Member member) {
         commentService.modifyComment(commentRequest, member);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok().build();
     }
 }
