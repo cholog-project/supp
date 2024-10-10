@@ -1,7 +1,7 @@
 package cholog.supp.api.study.controller;
 
-import cholog.supp.api.study.dto.CreateStudyGroupRequest;
-import cholog.supp.api.study.dto.StudyGroupResponse;
+import cholog.supp.api.study.dto.request.CreateStudyGroupRequest;
+import cholog.supp.api.study.dto.response.StudyGroupResponse;
 import cholog.supp.api.study.service.StudyGroupService;
 import cholog.supp.common.auth.Auth;
 import cholog.supp.db.member.Member;

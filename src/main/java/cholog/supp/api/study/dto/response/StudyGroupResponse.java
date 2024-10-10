@@ -1,4 +1,4 @@
-package cholog.supp.api.study.dto;
+package cholog.supp.api.study.dto.response;
 
 public record StudyGroupResponse(
     Long studyId,

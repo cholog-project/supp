@@ -1,7 +1,7 @@
 package cholog.supp.api.study.service;
 
-import cholog.supp.api.study.dto.CreateStudyGroupRequest;
-import cholog.supp.api.study.dto.StudyGroupResponse;
+import cholog.supp.api.study.dto.request.CreateStudyGroupRequest;
+import cholog.supp.api.study.dto.response.StudyGroupResponse;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberCategory;
 import cholog.supp.db.member.MemberCategoryRepository;
@@ -34,7 +34,7 @@ public class StudyGroupService {
 
     @Transactional(readOnly = true)
     public List<StudyGroupResponse> getGroup(Member member) {
-        List<MemberStudyMap> memberStudyMaps = memberStudyMapRepository.findByMemberId(
+        List<MemberStudyMap> memberStudyMaps = memberStudyMapRepository.findAllByMemberId(
             member.getId());
         return memberStudyMaps.stream()
             .map(MemberStudyMap::getStudyGroup)
