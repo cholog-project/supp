@@ -5,6 +5,8 @@ import cholog.supp.api.study.dto.response.StudyGroupResponse;
 import cholog.supp.api.study.service.StudyGroupService;
 import cholog.supp.common.auth.Auth;
 import cholog.supp.db.member.Member;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +17,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/group")
 @RequiredArgsConstructor
 public class StudyGroupController {
 
     private final StudyGroupService studyGroupService;
 
-    @PostMapping("/group")
+    @PostMapping
     public ResponseEntity createGroup(
-        @RequestBody CreateStudyGroupRequest request, @Auth Member member) {
-        studyGroupService.createStudyGroup(request, member);
-        return ResponseEntity.ok().build();
+        @RequestBody CreateStudyGroupRequest request, @Auth Member member)
+        throws URISyntaxException {
+        Long groupId = studyGroupService.createStudyGroup(request, member);
+        return ResponseEntity.created(
+            new URI("/api/v1/group/" + groupId)).build();
     }
 
-    @GetMapping("/group")
+    @GetMapping
     public ResponseEntity<List<StudyGroupResponse>> getGroup(
         @Auth Member member
     ) {
