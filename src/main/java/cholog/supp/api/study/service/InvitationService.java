@@ -15,7 +15,7 @@ public class InvitationService {
     private final String URL = "/api/v1/group/join?token=";
     private final StudyGroupRepository studyGroupRepository;
 
-    public String createInvitation(InvitationRequest invitationRequest) {
+    public String createInvitationLink(InvitationRequest invitationRequest) {
         StudyGroup studyGroup = studyGroupRepository.findById(invitationRequest.studyId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
         String token = jwtUtils.createToken(studyGroup, invitationRequest.memberType());

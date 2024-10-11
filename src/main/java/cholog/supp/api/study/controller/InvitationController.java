@@ -17,8 +17,9 @@ public class InvitationController {
     private final InvitationService invitationService;
 
     @GetMapping("/invitation")
-    public ResponseEntity<String> invitation(@RequestBody InvitationRequest invitationRequest) {
-        String response = invitationService.createInvitation(invitationRequest);
+    public ResponseEntity<String> getInvitationLink(
+        @RequestBody InvitationRequest invitationRequest) {
+        String response = invitationService.createInvitationLink(invitationRequest);
         return ResponseEntity.ok().body(response);
     }
 }
