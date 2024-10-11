@@ -1,13 +1,15 @@
 package cholog.supp.api.post.service;
 
 import cholog.supp.api.post.dto.request.CreatePostRequest;
+import cholog.supp.api.post.dto.request.PostListRequest;
+import cholog.supp.api.post.dto.response.PostResponse;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberStudyMap;
 import cholog.supp.db.member.MemberStudyMapRepository;
 import cholog.supp.db.post.Post;
 import cholog.supp.db.post.PostRepository;
 import cholog.supp.db.study.StudyGroup;
-import cholog.supp.db.study.StudyGroupRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +21,6 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberStudyMapRepository memberStudyMapRepository;
-    private final StudyGroupRepository studyGroupRepository;
 
     public void createPost(Member member, CreatePostRequest createPostRequest) {
         MemberStudyMap memberStudy = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
@@ -29,5 +30,11 @@ public class PostService {
         postRepository.save(
             new Post(member, studyGroup, createPostRequest.title(),
                 createPostRequest.description()));
+    }
+
+    public List<PostResponse> getPostList(PostListRequest postListRequest) {
+        List<Post> allPost = postRepository.findAllByStudyId(
+            postListRequest.studyId());
+        return allPost.stream().map(it -> new PostResponse(it.getId(), it.getTitle())).toList();
     }
 }
