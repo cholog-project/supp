@@ -33,6 +33,7 @@ public class PostController {
     @GetMapping("/post-list")
     public ResponseEntity<List<PostResponse>> getPostList(@Auth Member member,
         @RequestBody PostListRequest postListRequest) {
+        // TODO: DB create_at 생성 후 정렬 반환 로직 필요
         List<PostResponse> response = postService.getPostList(postListRequest);
         return ResponseEntity.ok().body(response);
     }
