@@ -1,7 +1,7 @@
 package cholog.supp.api.post.controller;
 
 import cholog.supp.api.post.dto.request.CreatePostRequest;
-import cholog.supp.api.post.dto.request.PostListRequest;
+import cholog.supp.api.post.dto.request.PostsRequest;
 import cholog.supp.api.post.dto.response.PostResponse;
 import cholog.supp.api.post.service.PostService;
 import cholog.supp.common.auth.Auth;
@@ -32,8 +32,8 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> getPostList(
-        @RequestBody PostListRequest postListRequest) {
-        List<PostResponse> response = postService.getPostList(postListRequest);
+        @RequestBody PostsRequest postsRequest) {
+        List<PostResponse> response = postService.getPostList(postsRequest);
         return ResponseEntity.ok().body(response);
     }
 }

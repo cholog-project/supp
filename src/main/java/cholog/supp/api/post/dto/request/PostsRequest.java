@@ -1,6 +1,6 @@
 package cholog.supp.api.post.dto.request;
 
-public record PostListRequest(
+public record PostsRequest(
     Long studyId
 ) {
 
