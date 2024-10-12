@@ -11,7 +11,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,12 +37,6 @@ public class StudyGroupController {
         @Auth Member member
     ) {
         var response = studyGroupService.getGroup(member);
-        return ResponseEntity.ok().body(response);
-    }
-
-    @GetMapping("/{groupId}")
-    public ResponseEntity<StudyGroupResponse> getEachGroup(@PathVariable Long groupId) {
-        StudyGroupResponse response = studyGroupService.getEachGroup(groupId);
         return ResponseEntity.ok().body(response);
     }
 }
