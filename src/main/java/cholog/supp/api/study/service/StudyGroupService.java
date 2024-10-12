@@ -51,7 +51,6 @@ public class StudyGroupService {
         StudyGroup studyGroup = studyGroupRepository.findById(groupId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
         long peopleCount = memberStudyMapRepository.countByStudyGroupId(groupId);
-        return new StudyGroupResponse(groupId, studyGroup.getName(), studyGroup.getOrganization(),
-            peopleCount);
+        return new StudyGroupResponse(studyGroup, peopleCount);
     }
 }
