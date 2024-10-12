@@ -18,20 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/post")
 public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/post")
+    @PostMapping
     public ResponseEntity createPost(@RequestBody CreatePostRequest createPostRequest,
         @Auth Member member) {
         postService.createPost(member, createPostRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/post-list")
-    public ResponseEntity<List<PostResponse>> getPostList(@Auth Member member,
+    @GetMapping
+    public ResponseEntity<List<PostResponse>> getPostList(
         @RequestBody PostListRequest postListRequest) {
         // TODO: DB create_at 생성 후 정렬 반환 로직 필요
         List<PostResponse> response = postService.getPostList(postListRequest);
