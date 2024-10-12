@@ -13,18 +13,18 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "STUDY")
+@Table(name = "STUDY_GROUP")
 @NoArgsConstructor
 public class StudyGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "study_id", nullable = false)
+    @Column(name = "study_group_id", nullable = false)
     private Long id;
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "study_name", nullable = false)
+    @Column(name = "study_group_name", nullable = false)
     private String name;
 
     @Size(max = 255)

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("select p from Post p where p.study.id = :studyGroupId order by p.createdDate desc")
+    @Query("select p from Post p where p.study.id = :studyId order by p.createdDate desc")
     List<Post> findAllByStudyIdDesc(Long studyId);
 }
