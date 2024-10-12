@@ -13,8 +13,11 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Getter
 @Entity
@@ -41,6 +44,14 @@ public class Comment {
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
+
+    @CreatedDate
+    @Column(name = "creted_date")
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column(name = "modified_date")
+    private LocalDateTime modifiedDate;
 
     public Comment(Member member, Post post, String content) {
         this.member = member;
