@@ -27,14 +27,13 @@ public class PostService {
                 createPostRequest.studyId(), member.getId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
         StudyGroup studyGroup = memberStudy.getStudyGroup();
-        postRepository.save(
-            new Post(member, studyGroup, createPostRequest.title(),
-                createPostRequest.description()));
+        postRepository.save(new Post(member, studyGroup, createPostRequest.title(),
+            createPostRequest.description()));
     }
 
     public List<PostResponse> getPostList(PostListRequest postListRequest) {
-        List<Post> allPost = postRepository.findAllByStudyIdDesc(
-            postListRequest.studyId());
-        return allPost.stream().map(it -> new PostResponse(it.getId(), it.getTitle())).toList();
+        List<Post> allPost = postRepository.findAllByStudyIdDesc(postListRequest.studyId());
+        return allPost.stream()
+            .map(it -> new PostResponse(it.getId(), it.getTitle(), it.getCreatedDate())).toList();
     }
 }
