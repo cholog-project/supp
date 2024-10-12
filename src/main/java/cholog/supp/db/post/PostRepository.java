@@ -2,8 +2,10 @@ package cholog.supp.db.post;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findAllByStudyId(Long studyGroupId);
+    @Query("select p from Post p where p.study.id = :studyGroupId order by p.createdDate desc")
+    List<Post> findAllByStudyIdDesc(Long studyId);
 }

@@ -33,7 +33,7 @@ public class PostService {
     }
 
     public List<PostResponse> getPostList(PostListRequest postListRequest) {
-        List<Post> allPost = postRepository.findAllByStudyId(
+        List<Post> allPost = postRepository.findAllByStudyIdDesc(
             postListRequest.studyId());
         return allPost.stream().map(it -> new PostResponse(it.getId(), it.getTitle())).toList();
     }
