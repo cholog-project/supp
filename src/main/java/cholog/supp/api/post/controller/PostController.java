@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/post")
+@RequestMapping("/api/v1")
 public class PostController {
 
     private final PostService postService;
 
-    @PostMapping
+    @PostMapping("/post")
     public ResponseEntity createPost(@RequestBody CreatePostRequest createPostRequest,
         @Auth Member member) {
         postService.createPost(member, createPostRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping
+    @GetMapping("/posts")
     public ResponseEntity<List<PostResponse>> getPostList(
         @RequestBody PostsRequest postsRequest) {
         List<PostResponse> response = postService.getPostList(postsRequest);
