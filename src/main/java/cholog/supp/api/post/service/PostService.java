@@ -1,7 +1,6 @@
 package cholog.supp.api.post.service;
 
 import cholog.supp.api.post.dto.request.CreatePostRequest;
-import cholog.supp.api.post.dto.request.PostsRequest;
 import cholog.supp.api.post.dto.response.PostResponse;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberStudyMap;
@@ -32,8 +31,8 @@ public class PostService {
                 createPostRequest.description()));
     }
 
-    public List<PostResponse> getPostList(PostsRequest postsRequest) {
-        List<Post> allPost = postRepository.findAllByStudyIdDesc(postsRequest.studyId());
+    public List<PostResponse> getPostList(Long studyId) {
+        List<Post> allPost = postRepository.findAllByStudyIdDesc(studyId);
         return allPost.stream()
             .map(it -> new PostResponse(it.getId(), it.getTitle(), it.getCreatedDate())).toList();
     }

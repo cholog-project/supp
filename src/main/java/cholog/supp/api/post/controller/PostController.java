@@ -1,7 +1,6 @@
 package cholog.supp.api.post.controller;
 
 import cholog.supp.api.post.dto.request.CreatePostRequest;
-import cholog.supp.api.post.dto.request.PostsRequest;
 import cholog.supp.api.post.dto.response.PostResponse;
 import cholog.supp.api.post.service.PostService;
 import cholog.supp.common.auth.Auth;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,8 +32,8 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity<List<PostResponse>> getPostList(
-        @RequestBody PostsRequest postsRequest) {
-        List<PostResponse> response = postService.getPostList(postsRequest);
+        @RequestParam Long studyId) {
+        List<PostResponse> response = postService.getPostList(studyId);
         return ResponseEntity.ok().body(response);
     }
 }
