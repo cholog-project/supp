@@ -7,5 +7,4 @@ public class Validation {
     public static boolean verifyMember(Member member, Long compareMemberId) {
         return member.getId().equals(compareMemberId);
     }
-
 }
