@@ -7,9 +7,10 @@ import cholog.supp.api.post.dto.response.PostResponse;
 import cholog.supp.api.post.service.PostService;
 import cholog.supp.common.auth.Auth;
 import cholog.supp.db.member.Member;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +28,9 @@ public class PostController {
 
     @PostMapping("/post")
     public ResponseEntity createPost(@RequestBody CreatePostRequest createPostRequest,
-        @Auth Member member) {
-        postService.createPost(member, createPostRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build(); //TODO : url 추가 필요
+        @Auth Member member) throws URISyntaxException {
+        Long postId = postService.createPost(member, createPostRequest);
+        return ResponseEntity.created(new URI("/api/v1/post/" + postId)).build();
     }
 
     @GetMapping("/posts")

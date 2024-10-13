@@ -25,14 +25,15 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberStudyMapRepository memberStudyMapRepository;
 
-    public void createPost(Member member, CreatePostRequest createPostRequest) {
+    public Long createPost(Member member, CreatePostRequest createPostRequest) {
         MemberStudyMap memberStudy = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
                 createPostRequest.studyId(), member.getId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
         StudyGroup studyGroup = memberStudy.getStudyGroup();
-        postRepository.save(
+        Post post = postRepository.save(
             new Post(member, studyGroup, createPostRequest.title(),
                 createPostRequest.description()));
+        return post.getId();
     }
 
     @Transactional(readOnly = true)
