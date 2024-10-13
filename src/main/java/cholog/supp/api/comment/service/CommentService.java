@@ -29,7 +29,7 @@ public class CommentService {
     public void modifyComment(ModifyCommentRequest commentRequest, Member member) {
         Comment comment = commentRepository.findById(commentRequest.commentId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 의견글 입니다."));
-        if (!Validation.verifyMember(member, comment.getId())) {
+        if (!Validation.verifyMember(member, comment.getMember().getId())) {
             throw new IllegalArgumentException("잘못된 접근입니다.");
         }
         comment.modifyContent(commentRequest.content());

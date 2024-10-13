@@ -1,5 +1,6 @@
 package cholog.supp.db.post;
 
+import cholog.supp.api.post.dto.ModifyPost;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.study.StudyGroup;
 import jakarta.persistence.Column;
@@ -67,5 +68,10 @@ public class Post {
         this.study = study;
         this.title = title;
         this.description = description;
+    }
+
+    public void modifyPost(ModifyPost modifyPost) {
+        this.title = modifyPost.title();
+        this.description = modifyPost.description();
     }
 }

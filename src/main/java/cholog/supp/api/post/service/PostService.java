@@ -1,8 +1,11 @@
 package cholog.supp.api.post.service;
 
+import cholog.supp.api.post.dto.ModifyPost;
 import cholog.supp.api.post.dto.request.CreatePostRequest;
+import cholog.supp.api.post.dto.request.ModifyPostRequest;
 import cholog.supp.api.post.dto.request.PostsRequest;
 import cholog.supp.api.post.dto.response.PostResponse;
+import cholog.supp.common.validation.Validation;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberStudyMap;
 import cholog.supp.db.member.MemberStudyMapRepository;
@@ -32,9 +35,19 @@ public class PostService {
                 createPostRequest.description()));
     }
 
+    @Transactional(readOnly = true)
     public List<PostResponse> getPostList(PostsRequest postsRequest) {
         List<Post> allPost = postRepository.findAllByStudyIdDesc(postsRequest.studyId());
         return allPost.stream()
             .map(it -> new PostResponse(it.getId(), it.getTitle(), it.getCreatedDate())).toList();
+    }
+
+    public void modifyPost(Member member, ModifyPostRequest modifyPostRequest) {
+        Post post = postRepository.findById(modifyPostRequest.postId())
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
+        if (!Validation.verifyMember(member, post.getMember().getId())) {
+            throw new IllegalArgumentException("잘못된 접근입니다.");
+        }
+        post.modifyPost(new ModifyPost(modifyPostRequest.title(), modifyPostRequest.description()));
     }
 }
