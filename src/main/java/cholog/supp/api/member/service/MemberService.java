@@ -1,6 +1,5 @@
 package cholog.supp.api.member.service;
 
-import cholog.supp.api.member.dto.request.EmailValidationRequest;
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
 import cholog.supp.api.member.dto.response.EmailValidationResponse;
@@ -37,8 +36,8 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public EmailValidationResponse emailValidation(EmailValidationRequest emailValidationRequest) {
+    public EmailValidationResponse emailValidation(String email) {
         return new EmailValidationResponse(
-            memberRepository.findByEmail(emailValidationRequest.email()).isPresent());
+            memberRepository.findByEmail(email).isPresent());
     }
 }
