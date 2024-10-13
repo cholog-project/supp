@@ -37,7 +37,7 @@ public class StudyGroupController {
     public ResponseEntity<List<StudyGroupResponse>> getGroup(
         @Auth Member member
     ) {
-        var response = studyGroupService.getGroup(member);
+        List<StudyGroupResponse> response = studyGroupService.getGroup(member);
         return ResponseEntity.ok().body(response);
     }
 
