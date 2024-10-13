@@ -2,6 +2,7 @@ package cholog.supp.api.comment.service;
 
 import cholog.supp.api.comment.dto.request.CreateCommentRequest;
 import cholog.supp.api.comment.dto.request.ModifyCommentRequest;
+import cholog.supp.common.validation.Validation;
 import cholog.supp.db.comment.Comment;
 import cholog.supp.db.comment.CommentRepository;
 import cholog.supp.db.member.Member;
@@ -28,13 +29,10 @@ public class CommentService {
     public void modifyComment(ModifyCommentRequest commentRequest, Member member) {
         Comment comment = commentRepository.findById(commentRequest.commentId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 의견글 입니다."));
-        if (!verifyMember(member, comment)) {
+        if (!Validation.verifyMember(member, comment.getId())) {
             throw new IllegalArgumentException("잘못된 접근입니다.");
         }
         comment.modifyContent(commentRequest.content());
     }
 
-    private boolean verifyMember(Member member, Comment comment) {
-        return member.getId().equals(comment.getMember().getId());
-    }
 }
