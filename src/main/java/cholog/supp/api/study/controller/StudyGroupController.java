@@ -1,6 +1,7 @@
 package cholog.supp.api.study.controller;
 
 import cholog.supp.api.study.dto.request.CreateStudyGroupRequest;
+import cholog.supp.api.study.dto.response.JoinGroupResponse;
 import cholog.supp.api.study.dto.response.StudyGroupResponse;
 import cholog.supp.api.study.service.StudyGroupService;
 import cholog.supp.common.auth.Auth;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -44,6 +46,15 @@ public class StudyGroupController {
     @GetMapping("/groups/{groupId}")
     public ResponseEntity<StudyGroupResponse> getEachGroup(@PathVariable Long groupId) {
         StudyGroupResponse response = studyGroupService.getEachGroup(groupId);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/group/join")
+    public ResponseEntity<JoinGroupResponse> joinGroup(@Auth Member member,
+        @RequestParam String token) {
+        JoinGroupResponse response = studyGroupService.joinGroup(member, token);
+        //TODO : 유효시간이 끝나면 막기
+        //TODO : 링크생성 api를 요청할 때마다 링크가 새로워지면 안되니
         return ResponseEntity.ok().body(response);
     }
 }

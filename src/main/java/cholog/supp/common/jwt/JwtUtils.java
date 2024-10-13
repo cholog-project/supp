@@ -22,7 +22,7 @@ public class JwtUtils {
         return Jwts.builder()
             .subject(studyGroup.getId().toString())
             .claim("organization", studyGroup.getOrganization())
-            .claim("memberType", memberType)
+            .claim("memberType", memberType.name())
             .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
             .expiration(new Date(System.currentTimeMillis() + expirationTime))
             .compact();
@@ -32,8 +32,8 @@ public class JwtUtils {
         Claims payload = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
             .build().parseSignedClaims(token).getPayload();
         Long studyGroupId = Long.valueOf(payload.getSubject());
-        MemberType memberType = payload.get("memberType", MemberType.class);
+        String memberType = payload.get("memberType", String.class);
         String organization = payload.get("organization", String.class);
-        return new VerifyToken(studyGroupId, memberType, organization);
+        return new VerifyToken(studyGroupId, MemberType.valueOf(memberType), organization);
     }
 }
