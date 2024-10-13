@@ -27,16 +27,16 @@ public class CommentService {
     }
 
     public void modifyComment(ModifyCommentRequest commentRequest, Member member) {
-        Comment comment = VerifyCommentOwner(member, commentRequest.commentId());
+        Comment comment = verifyCommentOwner(member, commentRequest.commentId());
         comment.modifyContent(commentRequest.content());
     }
 
     public void deleteComment(Member member, Long commentId) {
-        VerifyCommentOwner(member, commentId);
+        verifyCommentOwner(member, commentId);
         commentRepository.deleteById(commentId);
     }
 
-    private Comment VerifyCommentOwner(Member member, Long commentId) {
+    private Comment verifyCommentOwner(Member member, Long commentId) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 의견글 입니다."));
         if (!Validation.verifyMember(member, comment.getMember().getId())) {

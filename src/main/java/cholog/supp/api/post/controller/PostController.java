@@ -3,6 +3,7 @@ package cholog.supp.api.post.controller;
 import cholog.supp.api.post.dto.request.CreatePostRequest;
 import cholog.supp.api.post.dto.request.ModifyPostRequest;
 import cholog.supp.api.post.dto.request.PostsRequest;
+import cholog.supp.api.post.dto.response.EachPostResponse;
 import cholog.supp.api.post.dto.response.PostResponse;
 import cholog.supp.api.post.service.PostService;
 import cholog.supp.common.auth.Auth;
@@ -54,5 +55,12 @@ public class PostController {
     public ResponseEntity deletePost(@Auth Member member, @PathVariable Long postId) {
         postService.deletePost(member, postId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<EachPostResponse> getEachPost(@Auth Member member,
+        @PathVariable Long postId) {
+        EachPostResponse response = postService.getEachPost(member, postId);
+        return ResponseEntity.ok().body(response);
     }
 }

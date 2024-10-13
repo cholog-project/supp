@@ -4,8 +4,13 @@ import cholog.supp.api.post.dto.ModifyPost;
 import cholog.supp.api.post.dto.request.CreatePostRequest;
 import cholog.supp.api.post.dto.request.ModifyPostRequest;
 import cholog.supp.api.post.dto.request.PostsRequest;
+import cholog.supp.api.post.dto.response.EachComment;
+import cholog.supp.api.post.dto.response.EachPost;
+import cholog.supp.api.post.dto.response.EachPostResponse;
 import cholog.supp.api.post.dto.response.PostResponse;
 import cholog.supp.common.validation.Validation;
+import cholog.supp.db.comment.Comment;
+import cholog.supp.db.comment.CommentRepository;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberStudyMap;
 import cholog.supp.db.member.MemberStudyMapRepository;
@@ -24,6 +29,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberStudyMapRepository memberStudyMapRepository;
+    private final CommentRepository commentRepository;
 
     public Long createPost(Member member, CreatePostRequest createPostRequest) {
         MemberStudyMap memberStudy = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
@@ -50,6 +56,7 @@ public class PostService {
 
     public void deletePost(Member member, Long postId) {
         verifyPostOwner(member, postId);
+        commentRepository.deleteAllByPostId(postId);
         postRepository.deleteById(postId);
     }
 
@@ -60,5 +67,29 @@ public class PostService {
             throw new IllegalArgumentException("잘못된 접근입니다.");
         }
         return post;
+    }
+
+    public EachPostResponse getEachPost(Member member, Long postId) {
+        Post post = postRepository.findById(postId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
+        boolean isMyPost = Validation.verifyMember(member, post.getMember().getId());
+        EachPost eachPost = new EachPost(post, isMyPost);
+        List<EachComment> comments = makeComments(post.getStudy().getId(),
+            commentRepository.findAllByPostId(postId),
+            member);
+        return new EachPostResponse(eachPost, comments);
+    }
+
+    private List<EachComment> makeComments(Long studyId, List<Comment> comments, Member member) {
+        return comments.stream().map(comment -> {
+            Member nowCommentMember = comment.getMember();
+            MemberStudyMap memberStudyMap = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
+                    studyId,
+                    nowCommentMember.getId())
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다."));
+            String memberType = memberStudyMap.getMemberCategory().getMemberType().toString();
+            boolean isMyComment = Validation.verifyMember(member, nowCommentMember.getId());
+            return new EachComment(comment, memberType, isMyComment);
+        }).toList();
     }
 }
