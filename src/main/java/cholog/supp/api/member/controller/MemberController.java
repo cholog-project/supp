@@ -1,9 +1,9 @@
 package cholog.supp.api.member.controller;
 
+import cholog.supp.api.member.dto.request.EmailValidationRequest;
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
-import cholog.supp.api.member.dto.request.ValidationRequest;
-import cholog.supp.api.member.dto.response.ValidationResponse;
+import cholog.supp.api.member.dto.response.EmailValidationResponse;
 import cholog.supp.api.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -36,9 +36,9 @@ public class MemberController {
     }
 
     @GetMapping("/email-validation")
-    public ResponseEntity<ValidationResponse> emailValidation(
-        @RequestBody ValidationRequest validationRequest) {
-        ValidationResponse response = memberService.emailValidation(validationRequest);
+    public ResponseEntity<EmailValidationResponse> emailValidation(
+        @RequestBody EmailValidationRequest emailValidationRequest) {
+        EmailValidationResponse response = memberService.emailValidation(emailValidationRequest);
         return ResponseEntity.ok().body(response);
     }
 }

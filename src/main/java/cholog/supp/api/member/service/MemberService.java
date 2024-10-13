@@ -1,9 +1,9 @@
 package cholog.supp.api.member.service;
 
+import cholog.supp.api.member.dto.request.EmailValidationRequest;
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
-import cholog.supp.api.member.dto.request.ValidationRequest;
-import cholog.supp.api.member.dto.response.ValidationResponse;
+import cholog.supp.api.member.dto.response.EmailValidationResponse;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberRepository;
 import jakarta.servlet.http.HttpSession;
@@ -37,8 +37,8 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public ValidationResponse emailValidation(ValidationRequest validationRequest) {
-        return new ValidationResponse(
-            memberRepository.findByEmail(validationRequest.email()).isPresent());
+    public EmailValidationResponse emailValidation(EmailValidationRequest emailValidationRequest) {
+        return new EmailValidationResponse(
+            memberRepository.findByEmail(emailValidationRequest.email()).isPresent());
     }
 }
