@@ -2,8 +2,7 @@ package cholog.supp.api.member.controller;
 
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
-import cholog.supp.api.member.dto.request.ValidationRequest;
-import cholog.supp.api.member.dto.response.ValidationResponse;
+import cholog.supp.api.member.dto.response.EmailValidationResponse;
 import cholog.supp.api.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/v1")
@@ -36,9 +36,9 @@ public class MemberController {
     }
 
     @GetMapping("/email-validation")
-    public ResponseEntity<ValidationResponse> emailValidation(
-        @RequestBody ValidationRequest validationRequest) {
-        ValidationResponse response = memberService.emailValidation(validationRequest);
+    public ResponseEntity<EmailValidationResponse> emailValidation(
+        @RequestParam String email) {
+        EmailValidationResponse response = memberService.emailValidation(email);
         return ResponseEntity.ok().body(response);
     }
 }

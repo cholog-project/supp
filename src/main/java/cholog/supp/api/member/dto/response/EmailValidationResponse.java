@@ -1,6 +1,6 @@
 package cholog.supp.api.member.dto.response;
 
-public record ValidationResponse(
+public record EmailValidationResponse(
     boolean existence
 ) {
 

@@ -1,6 +1,6 @@
 package cholog.supp.api.member.dto.request;
 
-public record ValidationRequest(
+public record EmailValidationRequest(
     String email
 ) {
 
