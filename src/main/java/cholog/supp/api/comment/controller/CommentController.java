@@ -9,7 +9,10 @@ import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,5 +38,11 @@ public class CommentController {
         @Auth Member member) {
         commentService.modifyComment(commentRequest, member);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity deleteComment(@Auth Member member, @PathVariable Long commentId) {
+        commentService.deleteComment(member, commentId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

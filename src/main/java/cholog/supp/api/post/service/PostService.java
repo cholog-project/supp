@@ -44,16 +44,16 @@ public class PostService {
     }
 
     public void modifyPost(Member member, ModifyPostRequest modifyPostRequest) {
-        Post post = verifyPost(member, modifyPostRequest.postId());
+        Post post = verifyPostOwner(member, modifyPostRequest.postId());
         post.modifyPost(new ModifyPost(modifyPostRequest.title(), modifyPostRequest.description()));
     }
 
     public void deletePost(Member member, Long postId) {
-        verifyPost(member, postId);
+        verifyPostOwner(member, postId);
         postRepository.deleteById(postId);
     }
 
-    private Post verifyPost(Member member, Long postId) {
+    private Post verifyPostOwner(Member member, Long postId) {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
         if (!Validation.verifyMember(member, post.getMember().getId())) {
