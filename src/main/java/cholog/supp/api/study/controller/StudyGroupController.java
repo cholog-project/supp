@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/group")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class StudyGroupController {
 
     private final StudyGroupService studyGroupService;
 
-    @PostMapping
+    @PostMapping("/group")
     public ResponseEntity createGroup(
         @RequestBody CreateStudyGroupRequest request, @Auth Member member)
         throws URISyntaxException {
@@ -33,7 +33,7 @@ public class StudyGroupController {
             new URI("/api/v1/group/" + groupId)).build();
     }
 
-    @GetMapping
+    @GetMapping("/groups")
     public ResponseEntity<List<StudyGroupResponse>> getGroup(
         @Auth Member member
     ) {
@@ -41,7 +41,7 @@ public class StudyGroupController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/{groupId}")
+    @GetMapping("/groups/{groupId}")
     public ResponseEntity<StudyGroupResponse> getEachGroup(@PathVariable Long groupId) {
         StudyGroupResponse response = studyGroupService.getEachGroup(groupId);
         return ResponseEntity.ok().body(response);
