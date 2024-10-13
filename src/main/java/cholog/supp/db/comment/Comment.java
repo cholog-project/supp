@@ -56,7 +56,6 @@ public class Comment {
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
 
-
     public Comment(Member member, Post post, String content) {
         this.member = member;
         this.post = post;
