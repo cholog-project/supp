@@ -31,7 +31,7 @@ public class CommentController {
         @Valid @RequestBody CreateCommentRequest commentRequest,
         @Auth Member member) throws URISyntaxException {
         commentService.createComment(commentRequest, member);
-        return ResponseEntity.created(new URI("/api/v1/post/" + commentRequest.postId())).build();
+        return ResponseEntity.created(new URI("/api/v1/posts/" + commentRequest.postId())).build();
     }
 
     @PutMapping

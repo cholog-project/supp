@@ -47,7 +47,6 @@ public class StudyGroupController {
     @GetMapping("/{groupId}")
     public ResponseEntity<EachGroupResponse> getEachGroup(@Auth Member member,
         @PathVariable Long groupId) {
-        // TODO: 링크 보내기 버튼이 NODE에게만 보여야 하니까 Response에 MemberType 정보를 포함해야 할 듯
         EachGroupResponse response = studyGroupService.getEachGroup(member, groupId);
         return ResponseEntity.ok().body(response);
     }
