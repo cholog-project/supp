@@ -2,7 +2,6 @@ package cholog.supp.api.post.controller;
 
 import cholog.supp.api.post.dto.request.CreatePostRequest;
 import cholog.supp.api.post.dto.request.ModifyPostRequest;
-import cholog.supp.api.post.dto.request.PostsRequest;
 import cholog.supp.api.post.dto.response.EachPostResponse;
 import cholog.supp.api.post.dto.response.PostResponse;
 import cholog.supp.api.post.service.PostService;
@@ -38,12 +37,6 @@ public class PostController {
         return ResponseEntity.created(new URI("/api/v1/posts/" + postId)).build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<PostResponse>> getPostList(@RequestBody PostsRequest postsRequest) {
-        List<PostResponse> response = postService.getPostList(postsRequest);
-        return ResponseEntity.ok().body(response);
-    }
-
     @PutMapping
     public ResponseEntity<Void> modifyPost(@Auth Member member,
         @RequestBody ModifyPostRequest modifyPostRequest) {
@@ -64,7 +57,7 @@ public class PostController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/posts")
+    @GetMapping
     public ResponseEntity<List<PostResponse>> getPostList(@RequestParam Long studyId) {
         List<PostResponse> response = postService.getPostList(studyId);
         return ResponseEntity.ok().body(response);
