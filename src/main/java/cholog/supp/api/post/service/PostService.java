@@ -70,6 +70,7 @@ public class PostService {
         return post;
     }
 
+    @Transactional(readOnly = true)
     public EachPostResponse getEachPost(Member member, Long postId) {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
@@ -84,7 +85,8 @@ public class PostService {
         return new EachPostResponse(eachPost, comments);
     }
 
-    private List<EachComment> getCommentList(Long studyId, List<Comment> comments, Member member) {
+    @Transactional(readOnly = true)
+    public List<EachComment> getCommentList(Long studyId, List<Comment> comments, Member member) {
         return comments.stream().map(comment -> {
             Member nowCommentMember = comment.getMember();
             MemberStudyMap memberStudyMap = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
