@@ -27,21 +27,16 @@ public class CommentService {
     }
 
     public void modifyComment(ModifyCommentRequest commentRequest, Member member) {
-        Comment comment = verifyCommentOwner(member, commentRequest.commentId());
+        Comment comment = commentRepository.findById(commentRequest.commentId())
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 의견글 입니다."));
+        Validation.verifyCommentOwner(member, comment);
         comment.modifyContent(commentRequest.content());
     }
 
     public void deleteComment(Member member, Long commentId) {
-        verifyCommentOwner(member, commentId);
-        commentRepository.deleteById(commentId);
-    }
-
-    private Comment verifyCommentOwner(Member member, Long commentId) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 의견글 입니다."));
-        if (!Validation.verifyMember(member, comment.getMember().getId())) {
-            throw new IllegalArgumentException("잘못된 접근입니다.");
-        }
-        return comment;
+        Validation.verifyCommentOwner(member, comment);
+        commentRepository.deleteById(commentId);
     }
 }

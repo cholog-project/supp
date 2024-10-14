@@ -51,23 +51,18 @@ public class PostService {
     }
 
     public void modifyPost(Member member, ModifyPostRequest modifyPostRequest) {
-        Post post = verifyPostOwner(member, modifyPostRequest.postId());
+        Post post = postRepository.findById(modifyPostRequest.postId())
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
+        Validation.verifyPostOwner(member, post);
         post.modifyPost(new ModifyPost(modifyPostRequest.title(), modifyPostRequest.description()));
     }
 
     public void deletePost(Member member, Long postId) {
-        verifyPostOwner(member, postId);
-        commentRepository.deleteAllByPostId(postId);
-        postRepository.deleteById(postId);
-    }
-
-    private Post verifyPostOwner(Member member, Long postId) {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
-        if (!Validation.verifyMember(member, post.getMember().getId())) {
-            throw new IllegalArgumentException("잘못된 접근입니다.");
-        }
-        return post;
+        Validation.verifyPostOwner(member, post);
+        commentRepository.deleteAllByPostId(postId);
+        postRepository.deleteById(postId);
     }
 
     @Transactional(readOnly = true)
