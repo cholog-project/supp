@@ -32,7 +32,7 @@ public class StudyGroupController {
         throws URISyntaxException {
         Long groupId = studyGroupService.createStudyGroup(request, member);
         return ResponseEntity.created(
-            new URI("/api/v1/group/" + groupId)).build();
+            new URI("/api/v1/groups/" + groupId)).build();
     }
 
     @GetMapping()
