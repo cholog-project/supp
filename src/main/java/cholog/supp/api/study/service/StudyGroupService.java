@@ -5,6 +5,7 @@ import cholog.supp.api.study.dto.response.JoinGroupResponse;
 import cholog.supp.api.study.dto.response.StudyGroupResponse;
 import cholog.supp.common.jwt.JwtUtils;
 import cholog.supp.common.jwt.VerifyToken;
+import cholog.supp.common.validation.Validation;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberCategory;
 import cholog.supp.db.member.MemberCategoryRepository;
@@ -41,6 +42,7 @@ public class StudyGroupService {
     public List<StudyGroupResponse> getGroup(Member member) {
         List<MemberStudyMap> memberStudyMaps = memberStudyMapRepository.findAllByMemberId(
             member.getId());
+        Validation.verifyEmptyList(memberStudyMaps);
         return memberStudyMaps.stream()
             .map(MemberStudyMap::getStudyGroup)
             .map(it -> {

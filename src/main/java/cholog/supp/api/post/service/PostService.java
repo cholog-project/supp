@@ -45,6 +45,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostResponse> getPostList(PostsRequest postsRequest) {
         List<Post> allPost = postRepository.findAllByStudyIdDesc(postsRequest.studyId());
+        Validation.verifyEmptyList(allPost);
         return allPost.stream()
             .map(it -> new PostResponse(it.getId(), it.getTitle(), it.getCreatedDate())).toList();
     }
@@ -74,9 +75,11 @@ public class PostService {
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
         boolean isMyPost = Validation.verifyMember(member, post.getMember().getId());
         EachPost eachPost = new EachPost(post, isMyPost);
+        List<Comment> allComment = commentRepository.findAllByPostId(postId);
+        Validation.verifyEmptyList(allComment);
         List<EachComment> comments = getCommentList(
             post.getStudy().getId(),
-            commentRepository.findAllByPostId(postId),
+            allComment,
             member);
         return new EachPostResponse(eachPost, comments);
     }
