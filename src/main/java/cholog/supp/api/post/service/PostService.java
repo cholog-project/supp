@@ -73,8 +73,8 @@ public class PostService {
     public EachPostResponse getEachPost(Member member, Long postId) {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
-        boolean isMyPost = Validation.verifyMember(member, post.getMember().getId());
-        EachPost eachPost = new EachPost(post, isMyPost);
+        boolean isAuthor = Validation.verifyMember(member, post.getMember().getId());
+        EachPost eachPost = new EachPost(post, isAuthor);
         List<Comment> allComment = commentRepository.findAllByPostId(postId);
         Validation.verifyEmptyList(allComment);
         List<EachComment> comments = getCommentList(
@@ -92,8 +92,8 @@ public class PostService {
                     nowCommentMember.getId())
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다."));
             String memberType = memberStudyMap.getMemberCategory().getMemberType().toString();
-            boolean isMyComment = Validation.verifyMember(member, nowCommentMember.getId());
-            return new EachComment(comment, memberType, isMyComment);
+            boolean isAuthor = Validation.verifyMember(member, nowCommentMember.getId());
+            return new EachComment(comment, memberType, isAuthor);
         }).toList();
     }
 

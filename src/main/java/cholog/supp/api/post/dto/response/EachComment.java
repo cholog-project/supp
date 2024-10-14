@@ -7,16 +7,16 @@ public record EachComment(
     String commentContent,
     String commentMemberType,
     Long commentMemberId,
-    boolean isMyComment
+    boolean isAuthor
 ) {
 
-    public EachComment(Comment comment, String commentMemberType, boolean isMyComment) {
+    public EachComment(Comment comment, String commentMemberType, boolean isAuthor) {
         this(
             comment.getId(),
             comment.getContent(),
             commentMemberType,
             comment.getMember().getId(),
-            isMyComment
+            isAuthor
         );
     }
 }

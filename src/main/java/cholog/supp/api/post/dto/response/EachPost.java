@@ -7,16 +7,16 @@ public record EachPost(
     String postTitle,
     String postDescription,
     Long postMemberId,
-    boolean isMyPost
+    boolean isAuthor
 ) {
 
-    public EachPost(Post post, boolean isMyPost) {
+    public EachPost(Post post, boolean isAuthor) {
         this(
             post.getId(),
             post.getTitle(),
             post.getDescription(),
             post.getMember().getId(),
-            isMyPost
+            isAuthor
         );
     }
 }
