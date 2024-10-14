@@ -25,39 +25,39 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/posts")
 public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/post")
+    @PostMapping()
     public ResponseEntity createPost(@RequestBody CreatePostRequest createPostRequest,
         @Auth Member member) throws URISyntaxException {
         Long postId = postService.createPost(member, createPostRequest);
         return ResponseEntity.created(new URI("/api/v1/post/" + postId)).build();
     }
 
-    @GetMapping("/posts")
+    @GetMapping()
     public ResponseEntity<List<PostResponse>> getPostList(
         @RequestBody PostsRequest postsRequest) {
         List<PostResponse> response = postService.getPostList(postsRequest);
         return ResponseEntity.ok().body(response);
     }
 
-    @PutMapping("/post")
+    @PutMapping()
     public ResponseEntity modifyPost(@Auth Member member,
         @RequestBody ModifyPostRequest modifyPostRequest) {
         postService.modifyPost(member, modifyPostRequest);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/posts/{postId}")
+    @DeleteMapping("/{postId}")
     public ResponseEntity deletePost(@Auth Member member, @PathVariable Long postId) {
         postService.deletePost(member, postId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/{postId}")
     public ResponseEntity<EachPostResponse> getEachPost(@Auth Member member,
         @PathVariable Long postId) {
         EachPostResponse response = postService.getEachPost(member, postId);
