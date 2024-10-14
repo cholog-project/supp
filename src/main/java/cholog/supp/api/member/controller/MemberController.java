@@ -36,8 +36,7 @@ public class MemberController {
     }
 
     @GetMapping("/email-validation")
-    public ResponseEntity<EmailValidationResponse> emailValidation(
-        @RequestParam String email) {
+    public ResponseEntity<EmailValidationResponse> emailValidation(@RequestParam String email) {
         EmailValidationResponse response = memberService.emailValidation(email);
         return ResponseEntity.ok().body(response);
     }

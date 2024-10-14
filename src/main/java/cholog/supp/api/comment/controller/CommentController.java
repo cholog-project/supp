@@ -28,8 +28,8 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<Void> createComment(
-        @Valid @RequestBody CreateCommentRequest commentRequest,
-        @Auth Member member) throws URISyntaxException {
+        @Valid @RequestBody CreateCommentRequest commentRequest, @Auth Member member)
+        throws URISyntaxException {
         commentService.createComment(commentRequest, member);
         return ResponseEntity.created(new URI("/api/v1/posts/" + commentRequest.postId())).build();
     }

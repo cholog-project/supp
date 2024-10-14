@@ -39,8 +39,7 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getPostList(
-        @RequestBody PostsRequest postsRequest) {
+    public ResponseEntity<List<PostResponse>> getPostList(@RequestBody PostsRequest postsRequest) {
         List<PostResponse> response = postService.getPostList(postsRequest);
         return ResponseEntity.ok().body(response);
     }
@@ -66,8 +65,7 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostResponse>> getPostList(
-        @RequestParam Long studyId) {
+    public ResponseEntity<List<PostResponse>> getPostList(@RequestParam Long studyId) {
         List<PostResponse> response = postService.getPostList(studyId);
         return ResponseEntity.ok().body(response);
     }

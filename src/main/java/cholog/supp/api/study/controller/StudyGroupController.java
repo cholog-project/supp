@@ -28,8 +28,8 @@ public class StudyGroupController {
     private final StudyGroupService studyGroupService;
 
     @PostMapping
-    public ResponseEntity<Void> createGroup(
-        @RequestBody CreateStudyGroupRequest request, @Auth Member member)
+    public ResponseEntity<Void> createGroup(@RequestBody CreateStudyGroupRequest request,
+        @Auth Member member)
         throws URISyntaxException {
         Long groupId = studyGroupService.createStudyGroup(request, member);
         return ResponseEntity.created(
@@ -37,9 +37,7 @@ public class StudyGroupController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StudyGroupResponse>> getGroup(
-        @Auth Member member
-    ) {
+    public ResponseEntity<List<StudyGroupResponse>> getGroup(@Auth Member member) {
         List<StudyGroupResponse> response = studyGroupService.getGroup(member);
         return ResponseEntity.ok().body(response);
     }
