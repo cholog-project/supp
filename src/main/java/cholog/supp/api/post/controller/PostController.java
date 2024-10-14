@@ -31,21 +31,21 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity createPost(@RequestBody CreatePostRequest createPostRequest,
         @Auth Member member) throws URISyntaxException {
         Long postId = postService.createPost(member, createPostRequest);
         return ResponseEntity.created(new URI("/api/v1/posts/" + postId)).build();
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<PostResponse>> getPostList(
         @RequestBody PostsRequest postsRequest) {
         List<PostResponse> response = postService.getPostList(postsRequest);
         return ResponseEntity.ok().body(response);
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity modifyPost(@Auth Member member,
         @RequestBody ModifyPostRequest modifyPostRequest) {
         postService.modifyPost(member, modifyPostRequest);

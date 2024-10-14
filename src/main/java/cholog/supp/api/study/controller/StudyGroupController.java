@@ -27,7 +27,7 @@ public class StudyGroupController {
 
     private final StudyGroupService studyGroupService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity createGroup(
         @RequestBody CreateStudyGroupRequest request, @Auth Member member)
         throws URISyntaxException {
@@ -36,7 +36,7 @@ public class StudyGroupController {
             new URI("/api/v1/groups/" + groupId)).build();
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<StudyGroupResponse>> getGroup(
         @Auth Member member
     ) {
