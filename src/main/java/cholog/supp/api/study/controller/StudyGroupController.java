@@ -1,6 +1,7 @@
 package cholog.supp.api.study.controller;
 
 import cholog.supp.api.study.dto.request.CreateStudyGroupRequest;
+import cholog.supp.api.study.dto.response.EachGroupResponse;
 import cholog.supp.api.study.dto.response.JoinGroupResponse;
 import cholog.supp.api.study.dto.response.StudyGroupResponse;
 import cholog.supp.api.study.service.StudyGroupService;
@@ -44,9 +45,10 @@ public class StudyGroupController {
     }
 
     @GetMapping("/{groupId}")
-    public ResponseEntity<StudyGroupResponse> getEachGroup(@PathVariable Long groupId) {
+    public ResponseEntity<EachGroupResponse> getEachGroup(@Auth Member member,
+        @PathVariable Long groupId) {
         // TODO: 링크 보내기 버튼이 NODE에게만 보여야 하니까 Response에 MemberType 정보를 포함해야 할 듯
-        StudyGroupResponse response = studyGroupService.getEachGroup(groupId);
+        EachGroupResponse response = studyGroupService.getEachGroup(member, groupId);
         return ResponseEntity.ok().body(response);
     }
 
