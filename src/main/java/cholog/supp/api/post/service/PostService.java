@@ -3,7 +3,6 @@ package cholog.supp.api.post.service;
 import cholog.supp.api.post.dto.ModifyPost;
 import cholog.supp.api.post.dto.request.CreatePostRequest;
 import cholog.supp.api.post.dto.request.ModifyPostRequest;
-import cholog.supp.api.post.dto.request.PostsRequest;
 import cholog.supp.api.post.dto.response.EachComment;
 import cholog.supp.api.post.dto.response.EachPost;
 import cholog.supp.api.post.dto.response.EachPostResponse;
@@ -43,8 +42,8 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostResponse> getPostList(PostsRequest postsRequest) {
-        List<Post> allPost = postRepository.findAllByStudyIdDesc(postsRequest.studyId());
+    public List<PostResponse> getPostList(Long studyId) {
+        List<Post> allPost = postRepository.findAllByStudyIdDesc(studyId);
         return allPost.stream()
             .map(it -> new PostResponse(it.getId(), it.getTitle(), it.getCreatedDate())).toList();
     }
@@ -92,9 +91,5 @@ public class PostService {
         }).toList();
     }
 
-    public List<PostResponse> getPostList(Long studyId) {
-        List<Post> allPost = postRepository.findAllByStudyIdDesc(studyId);
-        return allPost.stream()
-            .map(it -> new PostResponse(it.getId(), it.getTitle(), it.getCreatedDate())).toList();
-    }
+
 }
