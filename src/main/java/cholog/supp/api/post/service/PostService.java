@@ -74,13 +74,14 @@ public class PostService {
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 질문글 입니다."));
         boolean isMyPost = Validation.verifyMember(member, post.getMember().getId());
         EachPost eachPost = new EachPost(post, isMyPost);
-        List<EachComment> comments = makeComments(post.getStudy().getId(),
+        List<EachComment> comments = getCommentList(
+            post.getStudy().getId(),
             commentRepository.findAllByPostId(postId),
             member);
         return new EachPostResponse(eachPost, comments);
     }
 
-    private List<EachComment> makeComments(Long studyId, List<Comment> comments, Member member) {
+    private List<EachComment> getCommentList(Long studyId, List<Comment> comments, Member member) {
         return comments.stream().map(comment -> {
             Member nowCommentMember = comment.getMember();
             MemberStudyMap memberStudyMap = memberStudyMapRepository.findByStudyGroupIdAndMemberId(

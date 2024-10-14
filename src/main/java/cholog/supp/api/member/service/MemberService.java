@@ -39,10 +39,9 @@ public class MemberService {
         }
         memberRepository.save(member);
     }
-  
+
     public EmailValidationResponse emailValidation(String email) {
         return new EmailValidationResponse(
             memberRepository.findByEmail(email).isPresent());
     }
-  
 }
