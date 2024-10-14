@@ -18,3 +18,11 @@ jwt:
   secret: ${SECRET_KEY}
   token:
     access-expiration-time: 86400
+
+server:
+  servlet:
+    session:
+      cookie:
+        secure:true
+        same-site:none
+        http-only:false

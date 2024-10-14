@@ -2,6 +2,7 @@ package cholog.supp.common.jwt;
 
 import cholog.supp.db.member.MemberType;
 import cholog.supp.db.study.StudyGroup;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.util.Date;
@@ -21,9 +22,18 @@ public class JwtUtils {
         return Jwts.builder()
             .subject(studyGroup.getId().toString())
             .claim("organization", studyGroup.getOrganization())
-            .claim("memberType", memberType)
+            .claim("memberType", memberType.name())
             .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
             .expiration(new Date(System.currentTimeMillis() + expirationTime))
             .compact();
+    }
+
+    public VerifyToken verifyToken(String token) {
+        Claims payload = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
+            .build().parseSignedClaims(token).getPayload();
+        Long studyGroupId = Long.valueOf(payload.getSubject());
+        String memberType = payload.get("memberType", String.class);
+        String organization = payload.get("organization", String.class);
+        return new VerifyToken(studyGroupId, MemberType.valueOf(memberType), organization);
     }
 }

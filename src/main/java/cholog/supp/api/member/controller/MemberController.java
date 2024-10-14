@@ -28,7 +28,7 @@ public class MemberController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity signIn(@RequestBody SignInMember signinMember,
+    public ResponseEntity<Void> signIn(@RequestBody SignInMember signinMember,
         HttpServletRequest request) {
         HttpSession session = request.getSession();
         memberService.signIn(signinMember, session);
@@ -36,8 +36,7 @@ public class MemberController {
     }
 
     @GetMapping("/email-validation")
-    public ResponseEntity<EmailValidationResponse> emailValidation(
-        @RequestParam String email) {
+    public ResponseEntity<EmailValidationResponse> emailValidation(@RequestParam String email) {
         EmailValidationResponse response = memberService.emailValidation(email);
         return ResponseEntity.ok().body(response);
     }

@@ -1,5 +1,6 @@
 package cholog.supp.db.comment;
 
+import cholog.supp.db.AuditEntity;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.post.Post;
 import jakarta.persistence.Column;
@@ -25,8 +26,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Table(name = "COMMENT")
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Comment {
+public class Comment extends AuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

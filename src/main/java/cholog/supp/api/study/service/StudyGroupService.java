@@ -1,7 +1,11 @@
 package cholog.supp.api.study.service;
 
 import cholog.supp.api.study.dto.request.CreateStudyGroupRequest;
+import cholog.supp.api.study.dto.response.EachGroupResponse;
+import cholog.supp.api.study.dto.response.JoinGroupResponse;
 import cholog.supp.api.study.dto.response.StudyGroupResponse;
+import cholog.supp.common.jwt.JwtUtils;
+import cholog.supp.common.jwt.VerifyToken;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberCategory;
 import cholog.supp.db.member.MemberCategoryRepository;
@@ -23,6 +27,7 @@ public class StudyGroupService {
     private final StudyGroupRepository studyGroupRepository;
     private final MemberCategoryRepository memberCategoryRepository;
     private final MemberStudyMapRepository memberStudyMapRepository;
+    private final JwtUtils jwtUtils;
 
     public Long createStudyGroup(CreateStudyGroupRequest request, Member member) {
         StudyGroup studyGroup = studyGroupRepository.save(
@@ -47,10 +52,24 @@ public class StudyGroupService {
     }
 
     @Transactional(readOnly = true)
-    public StudyGroupResponse getEachGroup(Long groupId) {
+    public EachGroupResponse getEachGroup(Member member, Long groupId) {
         StudyGroup studyGroup = studyGroupRepository.findById(groupId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
         long peopleCount = memberStudyMapRepository.countByStudyGroupId(groupId);
-        return new StudyGroupResponse(studyGroup, peopleCount);
+        MemberStudyMap memberStudyMap = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
+                groupId, member.getId())
+            .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다."));
+        MemberType memberType = memberStudyMap.getMemberCategory().getMemberType();
+        return new EachGroupResponse(studyGroup, peopleCount, memberType);
+    }
+
+    public JoinGroupResponse joinGroup(Member member, String token) {
+        VerifyToken verifyToken = jwtUtils.verifyToken(token);
+        MemberCategory memberCategory = memberCategoryRepository.save(
+            new MemberCategory(member, verifyToken.memberType()));
+        StudyGroup studyGroup = studyGroupRepository.findById(verifyToken.studyGroupId())
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
+        memberStudyMapRepository.save(new MemberStudyMap(member, memberCategory, studyGroup));
+        return new JoinGroupResponse(verifyToken, studyGroup.getName());
     }
 }

@@ -1,5 +1,7 @@
 package cholog.supp.db.post;
 
+import cholog.supp.api.post.dto.ModifyPost;
+import cholog.supp.db.AuditEntity;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.study.StudyGroup;
 import jakarta.persistence.Column;
@@ -26,8 +28,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Table(name = "POST")
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Post {
+public class Post extends AuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,5 +68,10 @@ public class Post {
         this.study = study;
         this.title = title;
         this.description = description;
+    }
+
+    public void modifyPost(ModifyPost modifyPost) {
+        this.title = modifyPost.title();
+        this.description = modifyPost.description();
     }
 }
