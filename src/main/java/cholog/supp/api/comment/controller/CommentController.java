@@ -27,21 +27,22 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity createComment(@Valid @RequestBody CreateCommentRequest commentRequest,
+    public ResponseEntity<Void> createComment(
+        @Valid @RequestBody CreateCommentRequest commentRequest,
         @Auth Member member) throws URISyntaxException {
         commentService.createComment(commentRequest, member);
         return ResponseEntity.created(new URI("/api/v1/post/" + commentRequest.postId())).build();
     }
 
     @PutMapping
-    public ResponseEntity modifyComment(@RequestBody ModifyCommentRequest commentRequest,
+    public ResponseEntity<Void> modifyComment(@RequestBody ModifyCommentRequest commentRequest,
         @Auth Member member) {
         commentService.modifyComment(commentRequest, member);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity deleteComment(@Auth Member member, @PathVariable Long commentId) {
+    public ResponseEntity<Void> deleteComment(@Auth Member member, @PathVariable Long commentId) {
         commentService.deleteComment(member, commentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

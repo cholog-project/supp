@@ -28,7 +28,7 @@ public class StudyGroupController {
     private final StudyGroupService studyGroupService;
 
     @PostMapping
-    public ResponseEntity createGroup(
+    public ResponseEntity<Void> createGroup(
         @RequestBody CreateStudyGroupRequest request, @Auth Member member)
         throws URISyntaxException {
         Long groupId = studyGroupService.createStudyGroup(request, member);

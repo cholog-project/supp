@@ -28,7 +28,7 @@ public class MemberController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity signIn(@RequestBody SignInMember signinMember,
+    public ResponseEntity<Void> signIn(@RequestBody SignInMember signinMember,
         HttpServletRequest request) {
         HttpSession session = request.getSession();
         memberService.signIn(signinMember, session);
