@@ -45,4 +45,12 @@ public class StudyGroupService {
                     peopleCount);
             }).toList();
     }
+
+    @Transactional(readOnly = true)
+    public StudyGroupResponse getEachGroup(Long groupId) {
+        StudyGroup studyGroup = studyGroupRepository.findById(groupId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
+        long peopleCount = memberStudyMapRepository.countByStudyGroupId(groupId);
+        return new StudyGroupResponse(studyGroup, peopleCount);
+    }
 }

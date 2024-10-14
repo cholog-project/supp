@@ -11,19 +11,20 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/group")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class StudyGroupController {
 
     private final StudyGroupService studyGroupService;
 
-    @PostMapping
+    @PostMapping("/group")
     public ResponseEntity createGroup(
         @RequestBody CreateStudyGroupRequest request, @Auth Member member)
         throws URISyntaxException {
@@ -32,11 +33,17 @@ public class StudyGroupController {
             new URI("/api/v1/group/" + groupId)).build();
     }
 
-    @GetMapping
+    @GetMapping("/groups")
     public ResponseEntity<List<StudyGroupResponse>> getGroup(
         @Auth Member member
     ) {
-        var response = studyGroupService.getGroup(member);
+        List<StudyGroupResponse> response = studyGroupService.getGroup(member);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/groups/{groupId}")
+    public ResponseEntity<StudyGroupResponse> getEachGroup(@PathVariable Long groupId) {
+        StudyGroupResponse response = studyGroupService.getEachGroup(groupId);
         return ResponseEntity.ok().body(response);
     }
 }
