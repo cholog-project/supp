@@ -35,7 +35,7 @@ public class PostController {
     public ResponseEntity createPost(@RequestBody CreatePostRequest createPostRequest,
         @Auth Member member) throws URISyntaxException {
         Long postId = postService.createPost(member, createPostRequest);
-        return ResponseEntity.created(new URI("/api/v1/post/" + postId)).build();
+        return ResponseEntity.created(new URI("/api/v1/posts/" + postId)).build();
     }
 
     @GetMapping()
