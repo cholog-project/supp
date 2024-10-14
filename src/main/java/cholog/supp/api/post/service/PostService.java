@@ -45,7 +45,6 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostResponse> getPostList(PostsRequest postsRequest) {
         List<Post> allPost = postRepository.findAllByStudyIdDesc(postsRequest.studyId());
-        Validation.verifyEmptyList(allPost);
         return allPost.stream()
             .map(it -> new PostResponse(it.getId(), it.getTitle(), it.getCreatedDate())).toList();
     }
@@ -72,7 +71,6 @@ public class PostService {
         boolean isAuthor = Validation.verifyMember(member, post.getMember().getId());
         EachPost eachPost = new EachPost(post, isAuthor);
         List<Comment> allComment = commentRepository.findAllByPostId(postId);
-        Validation.verifyEmptyList(allComment);
         List<EachComment> comments = getCommentList(
             post.getStudy().getId(),
             allComment,

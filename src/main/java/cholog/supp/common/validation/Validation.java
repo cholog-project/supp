@@ -3,18 +3,11 @@ package cholog.supp.common.validation;
 import cholog.supp.db.comment.Comment;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.post.Post;
-import java.util.List;
 
 public class Validation {
 
     public static boolean verifyMember(Member member, Long compareMemberId) {
         return member.getId().equals(compareMemberId);
-    }
-
-    public static void verifyEmptyList(List<?> list) {
-        if (list.isEmpty()) {
-            throw new IllegalArgumentException("리스트가 비어있습니다.");
-        }
     }
 
     public static void verifyCommentOwner(Member member, Comment comment) {
