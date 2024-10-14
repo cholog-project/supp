@@ -23,6 +23,6 @@ server:
   servlet:
     session:
       cookie:
-        secure:true
-        same-site:none
-        http-only:false
+        secure: true
+        same-site: none
+        http-only: false
