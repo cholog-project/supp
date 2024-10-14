@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -61,6 +62,13 @@ public class PostController {
     public ResponseEntity<EachPostResponse> getEachPost(@Auth Member member,
         @PathVariable Long postId) {
         EachPostResponse response = postService.getEachPost(member, postId);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostResponse>> getPostList(
+        @RequestParam Long studyId) {
+        List<PostResponse> response = postService.getPostList(studyId);
         return ResponseEntity.ok().body(response);
     }
 }

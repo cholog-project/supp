@@ -39,7 +39,13 @@ public class StudyGroupController {
     public ResponseEntity<List<StudyGroupResponse>> getGroup(
         @Auth Member member
     ) {
-        var response = studyGroupService.getGroup(member);
+        List<StudyGroupResponse> response = studyGroupService.getGroup(member);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/groups/{groupId}")
+    public ResponseEntity<StudyGroupResponse> getEachGroup(@PathVariable Long groupId) {
+        StudyGroupResponse response = studyGroupService.getEachGroup(groupId);
         return ResponseEntity.ok().body(response);
     }
 

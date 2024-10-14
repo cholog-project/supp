@@ -93,4 +93,10 @@ public class PostService {
             return new EachComment(comment, memberType, isMyComment);
         }).toList();
     }
+
+    public List<PostResponse> getPostList(Long studyId) {
+        List<Post> allPost = postRepository.findAllByStudyIdDesc(studyId);
+        return allPost.stream()
+            .map(it -> new PostResponse(it.getId(), it.getTitle(), it.getCreatedDate())).toList();
+    }
 }

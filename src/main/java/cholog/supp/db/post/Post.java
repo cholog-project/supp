@@ -6,6 +6,7 @@ import cholog.supp.db.member.Member;
 import cholog.supp.db.study.StudyGroup;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,8 +17,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @Entity
@@ -49,6 +54,14 @@ public class Post extends AuditEntity {
     @Lob
     @Column(name = "description", nullable = false)
     private String description;
+
+    @CreatedDate
+    @Column(name = "created_date", nullable = false)
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column(name = "modified_date")
+    private LocalDateTime modifiedDate;
 
     public Post(Member member, StudyGroup study, String title, String description) {
         this.member = member;
