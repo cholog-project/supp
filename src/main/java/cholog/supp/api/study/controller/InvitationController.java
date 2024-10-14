@@ -5,7 +5,7 @@ import cholog.supp.api.study.service.InvitationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +18,7 @@ public class InvitationController {
 
     @GetMapping("/invitation")
     public ResponseEntity<String> getInvitation(
-        @RequestBody InvitationRequest invitationRequest) {
+        @ModelAttribute InvitationRequest invitationRequest) {
         String response = invitationService.createInvitationLink(invitationRequest);
         return ResponseEntity.ok().body(response);
     }
