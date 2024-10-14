@@ -91,7 +91,7 @@ public class PostService {
                     studyId,
                     nowCommentMember.getId())
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다."));
-            String memberType = memberStudyMap.getMemberCategory().getMemberType().toString();
+            String memberType = memberStudyMap.getMemberCategory().getMemberType().name();
             boolean isAuthor = Validation.verifyMember(member, nowCommentMember.getId());
             return new EachComment(comment, memberType, isAuthor);
         }).toList();
