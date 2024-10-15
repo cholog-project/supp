@@ -90,6 +90,4 @@ public class PostService {
             return new EachComment(comment, memberType, isAuthor);
         }).toList();
     }
-
-
 }
