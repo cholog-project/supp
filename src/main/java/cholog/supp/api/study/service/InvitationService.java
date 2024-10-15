@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class InvitationService {
 
+    private static final String URL = "/api/v1/groups/join?token=";
     private final JwtUtils jwtUtils;
-    private final static String URL = "/api/v1/group/join?token=";
     private final StudyGroupRepository studyGroupRepository;
 
     public InvitationResponse createInvitationLink(InvitationRequest invitationRequest) {
