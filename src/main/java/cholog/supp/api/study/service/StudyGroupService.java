@@ -69,6 +69,10 @@ public class StudyGroupService {
             new MemberCategory(member, verifyToken.memberType()));
         StudyGroup studyGroup = studyGroupRepository.findById(verifyToken.studyGroupId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
+        if (memberStudyMapRepository.findByStudyGroupIdAndMemberId(studyGroup.getId(),
+            member.getId()).isPresent()) {
+            throw new IllegalStateException("이미 가입된 회원입니다.");
+        }
         memberStudyMapRepository.save(new MemberStudyMap(member, memberCategory, studyGroup));
         return new JoinGroupResponse(verifyToken, studyGroup.getName());
     }
