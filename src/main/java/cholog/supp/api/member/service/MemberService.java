@@ -2,7 +2,6 @@ package cholog.supp.api.member.service;
 
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
-import cholog.supp.api.member.dto.response.EmailValidationResponse;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberRepository;
 import jakarta.servlet.http.HttpSession;
@@ -40,8 +39,8 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public EmailValidationResponse emailValidation(String email) {
-        return new EmailValidationResponse(
-            memberRepository.findByEmail(email).isPresent());
+    public void emailValidation(String email) {
+        memberRepository.findByEmail(email)
+            .orElseThrow(() -> new IllegalArgumentException("이미 존재하는 이메일 입니다."));
     }
 }
