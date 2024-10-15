@@ -1,6 +1,7 @@
 package cholog.supp.api.study.service;
 
 import cholog.supp.api.study.dto.request.InvitationRequest;
+import cholog.supp.api.study.dto.response.InvitationResponse;
 import cholog.supp.common.jwt.JwtUtils;
 import cholog.supp.db.study.StudyGroup;
 import cholog.supp.db.study.StudyGroupRepository;
@@ -12,13 +13,13 @@ import org.springframework.stereotype.Service;
 public class InvitationService {
 
     private final JwtUtils jwtUtils;
-    private final String URL = "/api/v1/group/join?token=";
+    private final static String URL = "/api/v1/group/join?token=";
     private final StudyGroupRepository studyGroupRepository;
 
-    public String createInvitationLink(InvitationRequest invitationRequest) {
+    public InvitationResponse createInvitationLink(InvitationRequest invitationRequest) {
         StudyGroup studyGroup = studyGroupRepository.findById(invitationRequest.studyId())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디 입니다."));
         String token = jwtUtils.createToken(studyGroup, invitationRequest.memberType());
-        return URL + token;
+        return new InvitationResponse(URL + token);
     }
 }

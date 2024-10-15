@@ -1,6 +1,7 @@
 package cholog.supp.api.study.controller;
 
 import cholog.supp.api.study.dto.request.InvitationRequest;
+import cholog.supp.api.study.dto.response.InvitationResponse;
 import cholog.supp.api.study.service.InvitationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class InvitationController {
     private final InvitationService invitationService;
 
     @GetMapping("/invitation")
-    public ResponseEntity<String> getInvitation(
+    public ResponseEntity<InvitationResponse> getInvitation(
         @ModelAttribute InvitationRequest invitationRequest) {
-        String response = invitationService.createInvitationLink(invitationRequest);
+        InvitationResponse response = invitationService.createInvitationLink(invitationRequest);
         return ResponseEntity.ok().body(response);
     }
 }
