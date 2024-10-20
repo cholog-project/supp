@@ -20,9 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
+    private static final String SESSION_KEY = "member";
+
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private static final String SESSION_KEY = "member";
     private final MemberStudyMapRepository memberStudyMapRepository;
 
     public void signIn(SignInMember signinMember, HttpSession session) {
@@ -44,12 +45,14 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    @Transactional(readOnly = true)
     public void emailValidation(String email) {
         if (memberRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
         }
     }
 
+    @Transactional(readOnly = true)
     public MemberDataResponse getMemberData(Member member, Long groupId) {
         MemberStudyMap memberStudyMap = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
                 groupId, member.getId())
