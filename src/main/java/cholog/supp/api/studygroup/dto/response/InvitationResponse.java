@@ -1,4 +1,4 @@
-package cholog.supp.api.study.dto.response;
+package cholog.supp.api.studygroup.dto.response;
 
 public record InvitationResponse(
     String invitationLink

@@ -1,8 +1,8 @@
-package cholog.supp.api.study.controller;
+package cholog.supp.api.studygroup.controller;
 
-import cholog.supp.api.study.dto.request.InvitationRequest;
-import cholog.supp.api.study.dto.response.InvitationResponse;
-import cholog.supp.api.study.service.InvitationService;
+import cholog.supp.api.studygroup.dto.request.InvitationRequest;
+import cholog.supp.api.studygroup.dto.response.InvitationResponse;
+import cholog.supp.api.studygroup.service.InvitationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

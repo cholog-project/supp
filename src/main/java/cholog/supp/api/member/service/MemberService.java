@@ -2,8 +2,12 @@ package cholog.supp.api.member.service;
 
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
+import cholog.supp.api.member.dto.response.MemberInfoResponse;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberRepository;
+import cholog.supp.db.member.MemberStudyMap;
+import cholog.supp.db.member.MemberStudyMapRepository;
+import cholog.supp.db.member.MemberType;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
@@ -16,9 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
+    private static final String SESSION_KEY = "member";
+
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private static final String SESSION_KEY = "member";
+    private final MemberStudyMapRepository memberStudyMapRepository;
 
     public void signIn(SignInMember signinMember, HttpSession session) {
         Member member = memberRepository.findByEmail(signinMember.email())
@@ -39,9 +45,19 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    @Transactional(readOnly = true)
     public void emailValidation(String email) {
         if (memberRepository.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public MemberInfoResponse getMemberData(Member member, Long groupId) {
+        MemberStudyMap memberStudyMap = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
+                groupId, member.getId())
+            .orElseThrow(() -> new IllegalArgumentException("잘못된 요청입니다."));
+        MemberType memberType = memberStudyMap.getMemberCategory().getMemberType();
+        return new MemberInfoResponse(member.getId(), member.getEmail(), memberType);
     }
 }

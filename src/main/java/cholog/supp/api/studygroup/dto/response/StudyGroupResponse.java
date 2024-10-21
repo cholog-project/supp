@@ -1,4 +1,4 @@
-package cholog.supp.api.study.dto.response;
+package cholog.supp.api.studygroup.dto.response;
 
 import cholog.supp.db.study.StudyGroup;
 

@@ -1,4 +1,4 @@
-package cholog.supp.api.study.dto.request;
+package cholog.supp.api.studygroup.dto.request;
 
 public record CreateStudyGroupRequest(
     String studyName,

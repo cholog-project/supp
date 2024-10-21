@@ -2,7 +2,10 @@ package cholog.supp.api.member.controller;
 
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
+import cholog.supp.api.member.dto.response.MemberInfoResponse;
 import cholog.supp.api.member.service.MemberService;
+import cholog.supp.common.auth.Auth;
+import cholog.supp.db.member.Member;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +41,12 @@ public class MemberController {
     public ResponseEntity<Void> emailValidation(@RequestParam String email) {
         memberService.emailValidation(email);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/member/me")
+    public ResponseEntity<MemberInfoResponse> getMemberData(@Auth Member member,
+        @RequestParam Long groupId) {
+        MemberInfoResponse response = memberService.getMemberData(member, groupId);
+        return ResponseEntity.ok().body(response);
     }
 }
