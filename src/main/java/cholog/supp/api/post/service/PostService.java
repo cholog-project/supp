@@ -77,7 +77,6 @@ public class PostService {
         return new EachPostResponse(eachPost, comments);
     }
 
-    @Transactional(readOnly = true)
     public List<EachComment> getCommentList(Long studyId, List<Comment> comments, Member member) {
         return comments.stream().map(comment -> {
             Member nowCommentMember = comment.getMember();
@@ -90,6 +89,4 @@ public class PostService {
             return new EachComment(comment, memberType, isAuthor);
         }).toList();
     }
-
-
 }
