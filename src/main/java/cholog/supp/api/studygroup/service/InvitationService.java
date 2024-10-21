@@ -1,7 +1,7 @@
-package cholog.supp.api.study.service;
+package cholog.supp.api.studygroup.service;
 
-import cholog.supp.api.study.dto.request.InvitationRequest;
-import cholog.supp.api.study.dto.response.InvitationResponse;
+import cholog.supp.api.studygroup.dto.request.InvitationRequest;
+import cholog.supp.api.studygroup.dto.response.InvitationResponse;
 import cholog.supp.common.jwt.JwtUtils;
 import cholog.supp.db.study.StudyGroup;
 import cholog.supp.db.study.StudyGroupRepository;

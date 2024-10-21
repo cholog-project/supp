@@ -2,7 +2,7 @@ package cholog.supp.api.member.service;
 
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
-import cholog.supp.api.member.dto.response.MemberDataResponse;
+import cholog.supp.api.member.dto.response.MemberInfoResponse;
 import cholog.supp.db.member.Member;
 import cholog.supp.db.member.MemberRepository;
 import cholog.supp.db.member.MemberStudyMap;
@@ -53,11 +53,11 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public MemberDataResponse getMemberData(Member member, Long groupId) {
+    public MemberInfoResponse getMemberData(Member member, Long groupId) {
         MemberStudyMap memberStudyMap = memberStudyMapRepository.findByStudyGroupIdAndMemberId(
                 groupId, member.getId())
             .orElseThrow(() -> new IllegalArgumentException("잘못된 요청입니다."));
         MemberType memberType = memberStudyMap.getMemberCategory().getMemberType();
-        return new MemberDataResponse(member.getId(), member.getEmail(), memberType);
+        return new MemberInfoResponse(member.getId(), member.getEmail(), memberType);
     }
 }

@@ -1,9 +1,9 @@
-package cholog.supp.api.study.service;
+package cholog.supp.api.studygroup.service;
 
-import cholog.supp.api.study.dto.request.CreateStudyGroupRequest;
-import cholog.supp.api.study.dto.response.EachGroupResponse;
-import cholog.supp.api.study.dto.response.JoinGroupResponse;
-import cholog.supp.api.study.dto.response.StudyGroupResponse;
+import cholog.supp.api.studygroup.dto.request.CreateStudyGroupRequest;
+import cholog.supp.api.studygroup.dto.response.EachGroupResponse;
+import cholog.supp.api.studygroup.dto.response.JoinGroupResponse;
+import cholog.supp.api.studygroup.dto.response.StudyGroupResponse;
 import cholog.supp.common.jwt.JwtUtils;
 import cholog.supp.common.jwt.VerifyToken;
 import cholog.supp.db.member.Member;

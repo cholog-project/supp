@@ -1,10 +1,10 @@
-package cholog.supp.api.study.controller;
+package cholog.supp.api.studygroup.controller;
 
-import cholog.supp.api.study.dto.request.CreateStudyGroupRequest;
-import cholog.supp.api.study.dto.response.EachGroupResponse;
-import cholog.supp.api.study.dto.response.JoinGroupResponse;
-import cholog.supp.api.study.dto.response.StudyGroupResponse;
-import cholog.supp.api.study.service.StudyGroupService;
+import cholog.supp.api.studygroup.dto.request.CreateStudyGroupRequest;
+import cholog.supp.api.studygroup.dto.response.EachGroupResponse;
+import cholog.supp.api.studygroup.dto.response.JoinGroupResponse;
+import cholog.supp.api.studygroup.dto.response.StudyGroupResponse;
+import cholog.supp.api.studygroup.service.StudyGroupService;
 import cholog.supp.common.auth.Auth;
 import cholog.supp.db.member.Member;
 import java.net.URI;

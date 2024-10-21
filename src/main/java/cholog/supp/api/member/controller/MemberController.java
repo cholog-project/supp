@@ -2,7 +2,7 @@ package cholog.supp.api.member.controller;
 
 import cholog.supp.api.member.dto.request.SignInMember;
 import cholog.supp.api.member.dto.request.SignUpMember;
-import cholog.supp.api.member.dto.response.MemberDataResponse;
+import cholog.supp.api.member.dto.response.MemberInfoResponse;
 import cholog.supp.api.member.service.MemberService;
 import cholog.supp.common.auth.Auth;
 import cholog.supp.db.member.Member;
@@ -44,9 +44,9 @@ public class MemberController {
     }
 
     @GetMapping("/member/me")
-    public ResponseEntity<MemberDataResponse> getMemberData(@Auth Member member,
+    public ResponseEntity<MemberInfoResponse> getMemberData(@Auth Member member,
         @RequestParam Long groupId) {
-        MemberDataResponse response = memberService.getMemberData(member, groupId);
+        MemberInfoResponse response = memberService.getMemberData(member, groupId);
         return ResponseEntity.ok().body(response);
     }
 }
